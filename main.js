@@ -1,7 +1,7 @@
-//https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.2/svg.min.js
 "use strict"; // Barják László, 2017.06.10.
 
-var drawing = SVG("backstrap").size(600, 300);
+//var drawing = SVG("backstrap").size(600, 300); until svg.js 2.7.1
+var drawing = SVG().addTo("#backstrap").size(600, 300); //3.1.1
 var rect = drawing.rect(600, 300).attr({ fill: "gray" });
 
 const patterns = {
