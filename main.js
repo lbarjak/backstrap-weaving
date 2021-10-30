@@ -52,13 +52,13 @@ export default class Main {
         clearTimeout(timer);
         row = 0;
         pos = 0;
-        triangles();
+        polygons();
       }
     };
 
     draw();
 
-    let triangles = () => {
+    let polygons = () => {
       hexagons = document.querySelectorAll("polygon");
       hexagons.forEach((polygon, index) => console.log(index, polygon.points));
     };
