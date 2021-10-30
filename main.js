@@ -21,21 +21,24 @@ var nameOfPattern = "kigyohatas";
 var row = 0,
   pos = 0,
   lengthOfPattern,
-  timer,
-  hex;
+  timer;
 var pattNow = patterns[nameOfPattern];
 var corr = pattNow.upper.length === pattNow.lower.length ? 4 : 0;
 
+let hex = (x, y) => [
+  [x + 0, y + 7],
+  [x + 7, y + 0],
+  [x + 14, y + 7],
+  [x + 14, y + 39],
+  [x + 7, y + 46],
+  [x + 0, y + 39],
+];
+let poly;
 var hexagon = (x, y, color) => {
-  hex = [
-    [x + 0, y + 7],
-    [x + 7, y + 0],
-    [x + 14, y + 7],
-    [x + 14, y + 39],
-    [x + 7, y + 46],
-    [x + 0, y + 39],
-  ];
-  let poly = drawing.polygon(hex);
+  poly = drawing.polygon(hex(x, y));
+  poly.on("click", (e) =>
+    console.log("clicked", e.target.points[0].x, e.target.points[0].y)
+  );
   poly.fill(color);
   poly.stroke({ width: 0 });
 };
@@ -65,9 +68,9 @@ const draw = () => {
 
 draw();
 
-drawing.click(function () {
-  if (!row && !pos) {
-    rect.front();
-    draw();
-  }
-});
+// drawing.click(function () {
+//   if (!row && !pos) {
+//     rect.front();
+//     draw();
+//   }
+// });
