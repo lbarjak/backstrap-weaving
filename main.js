@@ -18,13 +18,14 @@ export default class Main {
   static nameOfPattern = "kigyohatas";
 
   constructor() {
+    this.drawing = SVG().addTo("#backstrap").size(600, 300);
+    this.rect = this.drawing.rect(600, 300).attr({ fill: "gray" });
     this.main();
   }
   main() {
-    //var drawing = SVG("backstrap").size(600, 300); until svg.js 2.7.1
-    let drawing = SVG().addTo("#backstrap").size(600, 300); //3.1.1
-    let rect = drawing.rect(600, 300).attr({ fill: "gray" });
-    let polygon = new Polygon(drawing);
+    //let drawing = SVG().addTo("#backstrap").size(600, 300);
+    //let rect = this.drawing.rect(600, 300).attr({ fill: "gray" });
+    let polygon = new Polygon(this.drawing);
     let hexagons = [];
     var row = 0,
       pos = 0,
@@ -65,12 +66,9 @@ export default class Main {
       hexagons.forEach((polygon, index) => console.log(index, polygon.points));
     };
 
-    rect.click(function () {
+    this.rect.click(function () {
       if (!row && !pos) {
         hexagons.forEach((polygon) => polygon.remove());
-        //let svg = document.querySelector("svg");
-        //svg.innerHTML = "";
-        //drawing.rect(600, 300).attr({ fill: "gray" });
         draw();
       }
     });
