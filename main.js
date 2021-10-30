@@ -8,7 +8,7 @@ export default class Main {
   main() {
     //var drawing = SVG("backstrap").size(600, 300); until svg.js 2.7.1
     let drawing = SVG().addTo("#backstrap").size(600, 300); //3.1.1
-    drawing.rect(600, 300).attr({ fill: "gray" });
+    let rect = drawing.rect(600, 300).attr({ fill: "gray" });
     let polygon = new Polygon(drawing);
     let hexagons = [];
 
@@ -63,7 +63,7 @@ export default class Main {
       hexagons.forEach((polygon, index) => console.log(index, polygon.points));
     };
 
-    drawing.click(function () {
+    rect.click(function () {
       if (!row && !pos) {
         hexagons.forEach((polygon) => polygon.remove());
         //let svg = document.querySelector("svg");
