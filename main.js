@@ -2,6 +2,21 @@
 import Polygon from "./polygon.js";
 
 export default class Main {
+  static patterns = {
+    hullamos: { upper: "vvvvvsvvvv", lower: "vvvvsvvvvv" },
+    lancos: { upper: "vvvvsvsvvvv", lower: "vvvvssvvvv" },
+    csikos: { upper: "vvssssssssssvv", lower: "vvsssssssssvv" },
+    keresztcsikos: { upper: "vvvvvvvvvvvvvvvvv", lower: "ssssssssssssssss" },
+    kigyohatas: {
+      upper: "ssssvvvvvvvsssvsssvvvvvvvssss",
+      lower: "ssssvvvssssssvvssssssvvvssss",
+    },
+    keresztes: { upper: "vvvsssvvsssvvsssvvv", lower: "sssvvsssvvsssvvsss" },
+    colors: { v: "white", s: "red" },
+    healds: { 0: "upper", 1: "lower" },
+  };
+  static nameOfPattern = "kigyohatas";
+
   constructor() {
     this.main();
   }
@@ -11,25 +26,10 @@ export default class Main {
     let rect = drawing.rect(600, 300).attr({ fill: "gray" });
     let polygon = new Polygon(drawing);
     let hexagons = [];
-
-    const patterns = {
-      hullamos: { upper: "vvvvvsvvvv", lower: "vvvvsvvvvv" },
-      lancos: { upper: "vvvvsvsvvvv", lower: "vvvvssvvvv" },
-      csikos: { upper: "vvssssssssssvv", lower: "vvsssssssssvv" },
-      keresztcsikos: { upper: "vvvvvvvvvvvvvvvvv", lower: "ssssssssssssssss" },
-      kigyohatas: {
-        upper: "ssssvvvvvvvsssvsssvvvvvvvssss",
-        lower: "ssssvvvssssssvvssssssvvvssss",
-      },
-      keresztes: { upper: "vvvsssvvsssvvsssvvv", lower: "sssvvsssvvsssvvsss" },
-      colors: { v: "white", s: "red" },
-      healds: { 0: "upper", 1: "lower" },
-    };
-    var nameOfPattern = "kigyohatas";
     var row = 0,
       pos = 0,
       timer;
-    var pattNow = patterns[nameOfPattern];
+    var pattNow = Main.patterns[Main.nameOfPattern];
     var corr = pattNow.upper.length === pattNow.lower.length ? 4 : 0;
 
     const draw = () => {
@@ -37,16 +37,18 @@ export default class Main {
       var x,
         y = 4 + row * 41,
         color;
-      var pattern = pattNow[patterns.healds[row % 2]];
+      var pattern = pattNow[Main.patterns.healds[row % 2]];
       x = 299 - pattern.length * 8;
       x = x + pos * 16 + dir * corr * -1;
-      color = patterns.colors[pattern[pos]];
+      color = Main.patterns.colors[pattern[pos]];
       polygon.hexagon(x, y, color);
       pos = pos + dir;
       if (pos === pattern.length || pos === -1)
         pos =
           (++row % 2) *
-          (patterns[nameOfPattern][patterns.healds[row % 2]].length - 1);
+          (Main.patterns[Main.nameOfPattern][Main.patterns.healds[row % 2]]
+            .length -
+            1);
       timer = setTimeout(() => draw(), 30);
       if (row === 7) {
         clearTimeout(timer);
