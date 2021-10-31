@@ -20,13 +20,11 @@ export default class Main {
   constructor() {
     this.drawing = SVG().addTo("#backstrap").size(600, 300);
     this.rect = this.drawing.rect(600, 300).attr({ fill: "gray" });
+    this.polygons = [];
     this.main();
   }
   main() {
-    //let drawing = SVG().addTo("#backstrap").size(600, 300);
-    //let rect = this.drawing.rect(600, 300).attr({ fill: "gray" });
-    let polygon = new Polygon(this.drawing);
-    let hexagons = [];
+    //let polygon = new Polygon(this.drawing);
     var row = 0,
       pos = 0,
       timer;
@@ -42,7 +40,9 @@ export default class Main {
       x = 299 - pattern.length * 8;
       x = x + pos * 16 + dir * corr * -1;
       color = Main.patterns.colors[pattern[pos]];
-      polygon.hexagon(x, y, color);
+      let polygon = new Polygon(this.drawing, x, y, color);
+      polygon.hexagon();
+      this.polygons.push(polygon);
       pos = pos + dir;
       if (pos === pattern.length || pos === -1)
         pos =
@@ -55,19 +55,23 @@ export default class Main {
         clearTimeout(timer);
         row = 0;
         pos = 0;
-        polygons();
+        printPolygons();
       }
     };
 
     draw();
 
-    let polygons = () => {
-      hexagons = document.querySelectorAll("polygon");
-      hexagons.forEach((polygon, index) => console.log(index, polygon.points));
+    let printPolygons = () => {
+      this.polygons.forEach((polygon) =>
+        console.log(polygon.serNum, polygon.x, polygon.y)
+      );
     };
 
-    this.rect.click(function () {
+    this.rect.click(() => {
       if (!row && !pos) {
+        this.polygons = [];
+        Polygon.serNum = 0;
+        let hexagons = document.querySelectorAll("polygon");
         hexagons.forEach((polygon) => polygon.remove());
         draw();
       }
