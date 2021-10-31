@@ -24,7 +24,6 @@ export default class Main {
     this.main();
   }
   main() {
-    //let polygon = new Polygon(this.drawing);
     var row = 0,
       pos = 0,
       timer;
@@ -41,7 +40,6 @@ export default class Main {
       x = x + pos * 16 + dir * corr * -1;
       color = Main.patterns.colors[pattern[pos]];
       let polygon = new Polygon(this.drawing, x, y, color);
-      polygon.hexagon();
       this.polygons.push(polygon);
       pos = pos + dir;
       if (pos === pattern.length || pos === -1)
