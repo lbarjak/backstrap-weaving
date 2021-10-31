@@ -1,76 +1,80 @@
-"use strict"; // Barják László, 2017.06.10.
+// Barják László, 2017.06.10.
+import Polygon from "./polygon.js";
 
-//var drawing = SVG("backstrap").size(600, 300); until svg.js 2.7.1
-var drawing = SVG().addTo("#backstrap").size(600, 300); //3.1.1
-var rect = drawing.rect(600, 300).attr({ fill: "gray" });
+export default class Main {
+  static patterns = {
+    hullamos: { upper: "vvvvvsvvvv", lower: "vvvvsvvvvv" },
+    lancos: { upper: "vvvvsvsvvvv", lower: "vvvvssvvvv" },
+    csikos: { upper: "vvssssssssssvv", lower: "vvsssssssssvv" },
+    keresztcsikos: { upper: "vvvvvvvvvvvvvvvvv", lower: "ssssssssssssssss" },
+    kigyohatas: {
+      upper: "ssssvvvvvvvsssvsssvvvvvvvssss",
+      lower: "ssssvvvssssssvvssssssvvvssss",
+    },
+    keresztes: { upper: "vvvsssvvsssvvsssvvv", lower: "sssvvsssvvsssvvsss" },
+    colors: { v: "white", s: "red" },
+    healds: { 0: "upper", 1: "lower" },
+  };
+  static nameOfPattern = "kigyohatas";
 
-const patterns = {
-  hullamos: { upper: "vvvvvsvvvv", lower: "vvvvsvvvvv" },
-  lancos: { upper: "vvvvsvsvvvv", lower: "vvvvssvvvv" },
-  csikos: { upper: "vvssssssssssvv", lower: "vvsssssssssvv" },
-  keresztcsikos: { upper: "vvvvvvvvvvvvvvvvv", lower: "ssssssssssssssss" },
-  kigyohatas: {
-    upper: "ssssvvvvvvvsssvsssvvvvvvvssss",
-    lower: "ssssvvvssssssvvssssssvvvssss",
-  },
-  keresztes: { upper: "vvvsssvvsssvvsssvvv", lower: "sssvvsssvvsssvvsss" },
-  colors: { v: "white", s: "red" },
-  healds: { 0: "upper", 1: "lower" },
-};
-var nameOfPattern = "kigyohatas";
-var row = 0,
-  pos = 0,
-  lengthOfPattern,
-  timer;
-var pattNow = patterns[nameOfPattern];
-var corr = pattNow.upper.length === pattNow.lower.length ? 4 : 0;
-
-let hex = (x, y) => [
-  [x + 0, y + 7],
-  [x + 7, y + 0],
-  [x + 14, y + 7],
-  [x + 14, y + 39],
-  [x + 7, y + 46],
-  [x + 0, y + 39],
-];
-let poly;
-var hexagon = (x, y, color) => {
-  poly = drawing.polygon(hex(x, y));
-  poly.on("click", (e) =>
-    console.log("clicked", e.target.points[0].x, e.target.points[0].y)
-  );
-  poly.fill(color);
-  poly.stroke({ width: 0 });
-};
-
-const draw = () => {
-  var dir = row % 2 ? -1 : 1;
-  var x,
-    y = 4 + row * 41,
-    color;
-  var pattern = pattNow[patterns.healds[row % 2]];
-  x = 299 - pattern.length * 8;
-  x = x + pos * 16 + dir * corr * -1;
-  color = patterns.colors[pattern[pos]];
-  hexagon(x, y, color);
-  pos = pos + dir;
-  if (pos === pattern.length || pos === -1)
-    pos =
-      (++row % 2) *
-      (patterns[nameOfPattern][patterns.healds[row % 2]].length - 1);
-  timer = setTimeout(() => draw(), 30);
-  if (row === 7) {
-    clearTimeout(timer);
-    row = 0;
-    pos = 0;
+  constructor() {
+    this.drawing = SVG().addTo("#backstrap").size(600, 300);
+    this.rect = this.drawing.rect(600, 300).attr({ fill: "gray" });
+    this.polygons = [];
+    this.main();
   }
-};
+  main() {
+    //let polygon = new Polygon(this.drawing);
+    var row = 0,
+      pos = 0,
+      timer;
+    var pattNow = Main.patterns[Main.nameOfPattern];
+    var corr = pattNow.upper.length === pattNow.lower.length ? 4 : 0;
 
-draw();
+    const draw = () => {
+      var dir = row % 2 ? -1 : 1;
+      var x,
+        y = 4 + row * 41,
+        color;
+      var pattern = pattNow[Main.patterns.healds[row % 2]];
+      x = 299 - pattern.length * 8;
+      x = x + pos * 16 + dir * corr * -1;
+      color = Main.patterns.colors[pattern[pos]];
+      let polygon = new Polygon(this.drawing, x, y, color);
+      polygon.hexagon();
+      this.polygons.push(polygon);
+      pos = pos + dir;
+      if (pos === pattern.length || pos === -1)
+        pos =
+          (++row % 2) *
+          (Main.patterns[Main.nameOfPattern][Main.patterns.healds[row % 2]]
+            .length -
+            1);
+      timer = setTimeout(() => draw(), 30);
+      if (row === 7) {
+        clearTimeout(timer);
+        row = 0;
+        pos = 0;
+        printPolygons();
+      }
+    };
 
-// drawing.click(function () {
-//   if (!row && !pos) {
-//     rect.front();
-//     draw();
-//   }
-// });
+    draw();
+
+    let printPolygons = () => {
+      this.polygons.forEach((polygon) =>
+        console.log(polygon.serNum, polygon.x, polygon.y)
+      );
+    };
+
+    this.rect.click(() => {
+      if (!row && !pos) {
+        this.polygons = [];
+        Polygon.serNum = 0;
+        let hexagons = document.querySelectorAll("polygon");
+        hexagons.forEach((polygon) => polygon.remove());
+        draw();
+      }
+    });
+  }
+}
