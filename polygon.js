@@ -20,11 +20,13 @@ export default class Polygon {
 
   hexagon = () => {
     let poly = this.drawing.polygon(Polygon.hex(this.x, this.y));
-    poly.on("click", (e) =>
+    poly.on("mousedown", (e) => {
       console.log(
         `Clicked! serNum: ${this.serNum}; x=${e.target.points[0].x}; y=${e.target.points[0].y}`
-      )
-    );
+      );
+      poly.fill(this.color === "red" ? "white" : "red");
+    });
+    poly.on(["mouseup", "mouseout"], () => poly.fill(this.color));
     poly.fill(this.color);
     poly.stroke({ width: 0 });
   };

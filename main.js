@@ -61,7 +61,7 @@ export default class Main {
           .length -
           1);
 
-    this.timer = setTimeout(() => this.draw(), 30);
+    this.timer = setTimeout(() => this.draw(), 5); //30);
 
     if (this.row === 7) {
       clearTimeout(this.timer);
