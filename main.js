@@ -18,8 +18,8 @@ export default class Main {
   static nameOfPattern = "kigyohatas";
 
   constructor() {
-    this.drawing = SVG().addTo("#backstrap").size(600, 300);
-    this.rect = this.drawing.rect(600, 300).attr({ fill: "gray" });
+    this.drawing = SVG().addTo("#backstrap").size(600, 600);
+    this.rect = this.drawing.rect(600, 600).attr({ fill: "gray" });
     this.polygons = [];
     this.init();
   }
@@ -46,7 +46,7 @@ export default class Main {
 
   draw = () => {
     let dir = this.row % 2 ? -1 : 1;
-    let y = 4 + this.row * 41;
+    let y = 10 + this.row * 41;
     let pattern = this.pattNow[Main.patterns.healds[this.row % 2]];
     let x = 299 - pattern.length * 8;
     x = x + this.pos * 16 + dir * this.corr * -1;
@@ -61,9 +61,9 @@ export default class Main {
           .length -
           1);
 
-    this.timer = setTimeout(() => this.draw(), 30);
+    this.timer = setTimeout(() => this.draw(), 20);
 
-    if (this.row === 7) {
+    if (this.row === 14) {
       clearTimeout(this.timer);
       this.row = 0;
       this.pos = 0;
