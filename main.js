@@ -2,7 +2,6 @@
 import Polygon from "./polygon.js";
 import Form from "./form.js";
 import Editor from "./editor.js";
-import Draw from "./draw.js";
 
 export default class Main {
   static backstraps = {
@@ -35,7 +34,7 @@ export default class Main {
     this.pos = 0;
     //this.polygons = [];
     Polygon.serNum = 0;
-    let hexagons = document.querySelectorAll("polygon");
+    let hexagons = document.querySelectorAll("#backstrap > svg > polygon");
     hexagons.forEach((polygon) => polygon.remove());
   };
 
