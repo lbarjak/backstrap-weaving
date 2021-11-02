@@ -1,6 +1,7 @@
 // Barják László, 2017.06.10.
 import Polygon from "./polygon.js";
 import Form from "./form.js";
+import Editor from "./editor.js";
 
 export default class Main {
   static backstraps = {
@@ -22,12 +23,7 @@ export default class Main {
   constructor() {
     this.drawing = SVG().addTo("#backstrap").size(600, 600);
     this.rect = this.drawing.rect(600, 600).attr({ fill: "gray" });
-    this.editor = SVG()
-      .addTo("#editor")
-      .size(600, 600)
-      .move(650, 0)
-      .fill("#f06");
-    this.rectEditor = this.editor.rect(600, 600).attr({ fill: "gray" });
+    new Editor();
     this.polygons = [];
     new Form(this);
     this.row = 0;
