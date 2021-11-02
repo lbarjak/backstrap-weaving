@@ -6,7 +6,7 @@ export default class Form {
   }
 
   form() {
-    let nameOfPattern = "hullámos";
+    let nameOfPattern; //= "hullámos";
     let patterns = Main.backstraps.patterns;
     let menu = document.getElementById("menu");
     menu.append("Válassz egy mintát:");
@@ -21,15 +21,8 @@ export default class Form {
       option.append(key);
       select.append(option);
     }
-    let button = document.createElement("input");
-    button.type = "button";
-    button.value = "Rajzold!";
-    form.append(button);
-    form.addEventListener("change", (e) => {
-      nameOfPattern = e.target.value;
-    });
-    button.addEventListener("click", (e) => {
-      this.self.init(nameOfPattern);
+    select.addEventListener("click", (e) => {
+      this.self.init(select.value);
     });
   }
 }
