@@ -23,6 +23,12 @@ export default class Main {
   constructor() {
     this.drawing = SVG().addTo("#backstrap").size(600, 600);
     this.rect = this.drawing.rect(600, 600).attr({ fill: "gray" });
+    this.editor = SVG()
+      .addTo("#editor")
+      .size(600, 600)
+      .move(650, 0)
+      .fill("#f06");
+    this.rectEditor = this.editor.rect(600, 600).attr({ fill: "gray" });
     this.polygons = [];
     new Form(this);
     this.row = 0;

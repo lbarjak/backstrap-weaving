@@ -27,11 +27,28 @@
     <title>Backstrap weaving with svg.js</title>
     <link rel="stylesheet" href="./styles.css" />
     <script src="./svg.min.js"></script>
+    <style>
+      #container {
+        display: flex;
+        flex-direction: row;
+        gap: 1vw;
+        justify-content: center;
+        align-items: flex-end;
+        margin-top: 10vh;
+      }
+    </style>
   </head>
 
   <body>
-    <div id="menu"></div>
-    <div id="backstrap"></div>
+    <container id="container">
+      <div id="left">
+        <div id="menu"></div>
+        <div id="backstrap"></div>
+      </div>
+      <div id="right">
+        <div id="editor"></div>
+      </div>
+    </container>
     <script type="module">
       import Main from "./main.js";
       new Main();
