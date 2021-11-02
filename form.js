@@ -8,7 +8,7 @@ export default class Form {
   form() {
     let patterns = Main.backstraps.patterns;
     let menu = document.getElementById("menu");
-    menu.append("Válassz egy mintát:");
+    menu.append("Válassz egy mintát (Choose a pattern):");
     let form = document.createElement("form");
     menu.append(form);
     let select = document.createElement("select");
@@ -21,7 +21,7 @@ export default class Form {
       select.append(option);
     }
     select.addEventListener("click", (e) => {
-      this.self.init(select.value);
+      this.self.initDraw(select.value);
     });
   }
 }

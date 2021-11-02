@@ -2,6 +2,7 @@
 import Polygon from "./polygon.js";
 import Form from "./form.js";
 import Editor from "./editor.js";
+import Draw from "./draw.js";
 
 export default class Main {
   static backstraps = {
@@ -24,55 +25,52 @@ export default class Main {
     this.drawing = SVG().addTo("#backstrap").size(600, 600);
     this.rect = this.drawing.rect(600, 600).attr({ fill: "gray" });
     new Editor();
-    this.polygons = [];
     new Form(this);
-    this.row = 0;
-    this.pos = 0;
-    this.timer;
-    this.init("hullámos");
+    this.initDraw("hullámos");
   }
 
   reset = () => {
     clearTimeout(this.timer);
     this.row = 0;
     this.pos = 0;
-    this.polygons = [];
+    //this.polygons = [];
     Polygon.serNum = 0;
     let hexagons = document.querySelectorAll("polygon");
     hexagons.forEach((polygon) => polygon.remove());
-    hexagons = document.querySelectorAll("polygon");
   };
 
-  init(nameOfPattern) {
-    this.row = 0;
-    this.pos = 0;
+  initDraw(nameOfPattern) {
+    let draw = () => {
+      direction = this.row % 2 ? -1 : 1;
+      y = 10 + this.row * 41;
+      pattern = this.pattNow[Main.backstraps.healds[this.row % 2]];
+      x = 299 - pattern.length * 8;
+      x = x + this.pos * 16 + direction * corr * -1;
+      color = Main.backstraps.colors[pattern[this.pos]];
+      //polygon =
+      new Polygon(this.drawing, x, y, color);
+      //this.polygons.push(polygon);
+      this.pos = this.pos + direction;
+      if (this.pos === pattern.length || this.pos === -1)
+        this.pos =
+          (++this.row % 2) *
+          (this.pattNow[Main.backstraps.healds[this.row % 2]].length - 1);
+
+      this.timer = setTimeout(() => draw(), 20);
+
+      if (this.row === 14) {
+        clearTimeout(this.timer);
+        this.row = 0;
+        this.pos = 0;
+      }
+    };
+
+    this.timer;
     this.reset();
     this.pattNow = Main.backstraps.patterns[nameOfPattern];
-    this.draw();
+    let corr = this.pattNow.upper.length === this.pattNow.lower.length ? 4 : 0;
+    let direction, x, y, pattern, color;
+    //let polygon;
+    draw();
   }
-
-  draw = () => {
-    this.corr = this.pattNow.upper.length === this.pattNow.lower.length ? 4 : 0;
-    let dir = this.row % 2 ? -1 : 1;
-    let y = 10 + this.row * 41;
-    let pattern = this.pattNow[Main.backstraps.healds[this.row % 2]];
-    let x = 299 - pattern.length * 8;
-    x = x + this.pos * 16 + dir * this.corr * -1;
-    let color = Main.backstraps.colors[pattern[this.pos]];
-    let polygon = new Polygon(this.drawing, x, y, color);
-    this.polygons.push(polygon);
-    this.pos = this.pos + dir;
-    if (this.pos === pattern.length || this.pos === -1)
-      this.pos =
-        (++this.row % 2) *
-        (this.pattNow[Main.backstraps.healds[this.row % 2]].length - 1);
-
-    this.timer = setTimeout(() => this.draw(), 20);
-
-    if (this.row === 14) {
-      clearTimeout(this.timer);
-      this.row = 0;
-      this.pos = 0;
-    }
-  };
 }
