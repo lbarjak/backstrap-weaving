@@ -18,7 +18,6 @@ export default class Main {
     colors: { v: "white", s: "red" },
     healds: { 0: "upper", 1: "lower" },
   };
-  static nameOfPattern = "kígyóhátas";
 
   constructor() {
     this.drawing = SVG().addTo("#backstrap").size(600, 600);

@@ -6,7 +6,6 @@ export default class Form {
   }
 
   form() {
-    let nameOfPattern; //= "hullámos";
     let patterns = Main.backstraps.patterns;
     let menu = document.getElementById("menu");
     menu.append("Válassz egy mintát:");
