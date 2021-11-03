@@ -24,12 +24,31 @@ export default class Editor {
     for (let i = 0; i <= 35; i++) {
       this.draw(i, shift);
     }
+    let ok = document.getElementById("ok");
+    let x = document.getElementById("X");
+    let hexagons = [];
+    let upper = [];
+    let lower = [];
+    ok.addEventListener("click", () => {
+      let polygons = document.querySelectorAll("#editor > svg > polygon");
+      polygons.forEach((hex) => {
+        hexagons.push(hex.getAttribute("fill"));
+      });
+      upper = hexagons.slice(0, 37);
+      lower = hexagons.slice(-36);
+    });
   };
 
   draw = (i, shift) => {
     let poly = this.editor.polygon(
       Editor.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
     );
+    poly.attr({
+      "fill-opacity": 0.0001,
+      stroke: "white",
+      "stroke-width": 1,
+    });
+
     poly.on("click", (e) => {
       if (poly.attr("fill") === "#000000") {
         poly.attr({
@@ -38,10 +57,6 @@ export default class Editor {
           fill: this.color,
         });
       } else {
-        poly.attr({
-          "fill-opacity": 1,
-          "stroke-width": 0,
-        });
         poly.fill(
           (this.color = poly.attr("fill") === "white" ? "red" : "white")
         );
@@ -49,7 +64,6 @@ export default class Editor {
     });
     poly.on(["contextmenu", "dblclick"], (e) => {
       e.preventDefault();
-      this.color = "white";
       poly.attr({
         "fill-opacity": 0.0001,
         stroke: "white",
@@ -57,12 +71,5 @@ export default class Editor {
         fill: "#000000",
       });
     });
-    poly.attr({
-      "fill-opacity": 0.0001,
-      stroke: "white",
-      "stroke-width": 1,
-    });
-    //poly.fill("white");
-    //poly.stroke({ color: "white", width: 1 });
   };
 }
