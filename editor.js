@@ -12,22 +12,21 @@ export default class Editor {
     this.editor = SVG().addTo("#editor").size(600, 600);
     this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
     this.hexagon();
+    this.color = "white";
   }
 
   hexagon = () => {
-    let color = "white";
     let shift = 0;
     for (let i = 0; i <= 36; i++) {
-      this.draw(i, color, shift);
+      this.draw(i, shift);
     }
-    color = "white";
     shift = 1;
     for (let i = 0; i <= 35; i++) {
-      this.draw(i, color, shift);
+      this.draw(i, shift);
     }
   };
 
-  draw = (i, color, shift) => {
+  draw = (i, shift) => {
     let poly = this.editor.polygon(
       Editor.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
     );
@@ -36,19 +35,21 @@ export default class Editor {
         poly.attr({
           "fill-opacity": 1,
           "stroke-width": 0,
-          fill: color,
+          fill: this.color,
         });
       } else {
         poly.attr({
           "fill-opacity": 1,
           "stroke-width": 0,
         });
-        poly.fill((color = poly.attr("fill") === "white" ? "red" : "white"));
+        poly.fill(
+          (this.color = poly.attr("fill") === "white" ? "red" : "white")
+        );
       }
     });
     poly.on(["contextmenu", "dblclick"], (e) => {
       e.preventDefault();
-      color = "white";
+      this.color = "white";
       poly.attr({
         "fill-opacity": 0.0001,
         stroke: "white",
