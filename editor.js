@@ -11,7 +11,7 @@ export default class Editor {
   constructor() {
     this.editor = SVG().addTo("#editor").size(600, 600);
     this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
-    this.rect.on("mousedown", (e) => this.hexagon());
+    this.hexagon();
   }
 
   hexagon = () => {
