@@ -16,10 +16,9 @@ export default class Editor {
 
   hexagon = () => {
     let color = "white";
-    for (let i = 0; i < 37; i++) {
+    for (let i = 0; i <= 36; i++) {
       let poly = this.editor.polygon(Editor.hex(5 + 16 * i, 10));
       poly.on("click", (e) => {
-        console.log("clicked", poly.attr("fill"));
         if (poly.attr("fill") === "#000000") {
           poly.attr({
             "fill-opacity": 1,
@@ -34,7 +33,7 @@ export default class Editor {
           poly.fill((color = poly.attr("fill") === "white" ? "red" : "white"));
         }
       });
-      poly.on("contextmenu", (e) => {
+      poly.on(["contextmenu", "dblclick"], (e) => {
         e.preventDefault();
         color = "white";
         poly.attr({

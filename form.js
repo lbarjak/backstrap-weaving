@@ -20,6 +20,7 @@ export default class Form {
       option.append(key);
       select.append(option);
     }
+    form.innerHTML += "<div>&nbsp;</div>";
     select.addEventListener("click", (e) => {
       this.self.initDraw(select.value);
     });
