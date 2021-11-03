@@ -1,13 +1,6 @@
-export default class Editor {
-  static hex = (x, y) => [
-    [x + 0, y + 7],
-    [x + 7, y + 0],
-    [x + 14, y + 7],
-    [x + 14, y + 39],
-    [x + 7, y + 46],
-    [x + 0, y + 39],
-  ];
+import Polygon from "./polygon.js";
 
+export default class Editor {
   constructor() {
     this.editor = SVG().addTo("#editor").size(600, 600);
     this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
@@ -25,23 +18,31 @@ export default class Editor {
       this.draw(i, shift);
     }
     let ok = document.getElementById("ok");
-    let x = document.getElementById("X");
-    let hexagons = [];
-    let upper = [];
-    let lower = [];
+    let x = document.getElementById("x");
+    let upper;
+    let lower;
     ok.addEventListener("click", () => {
       let polygons = document.querySelectorAll("#editor > svg > polygon");
+      let fillAttributes = [];
       polygons.forEach((hex) => {
-        hexagons.push(hex.getAttribute("fill"));
+        fillAttributes.push(
+          hex.getAttribute("fill") === null ? "-" : hex.getAttribute("fill")
+        );
       });
-      upper = hexagons.slice(0, 37);
-      lower = hexagons.slice(-36);
+      let fillAttributeString = fillAttributes
+        .join("")
+        .replaceAll("red", "s")
+        .replaceAll("white", "v");
+      upper = fillAttributeString.substring(0, 37);
+      lower = fillAttributeString.substring(37, 73);
+      console.log(upper);
+      console.log(lower);
     });
   };
 
   draw = (i, shift) => {
     let poly = this.editor.polygon(
-      Editor.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
+      Polygon.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
     );
     poly.attr({
       "fill-opacity": 0.0001,
