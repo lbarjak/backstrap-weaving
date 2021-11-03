@@ -43,6 +43,12 @@
         margin-top: 4vh;
         text-align: center;
       }
+      #title {
+        width: 600px;
+      }
+      span {
+        float: right;
+      }
     </style>
   </head>
 
@@ -57,7 +63,10 @@
       <div id="right">
         <div id="title">
           Szerkesztő (Editor)<br />Bal egérgomb: fehér/piros, jobb gomb vagy
-          dupla katt: törlés
+          dupla katt: törlés<span>
+            <input id="ok" type="button" value="Ok" />
+            <input id="x" type="button" value="X" />
+          </span>
         </div>
         <br />
         <div id="editor"></div>
