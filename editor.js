@@ -16,46 +16,21 @@ export default class Editor {
 
   hexagon = () => {
     let color = "white";
+    let shift = 0;
     for (let i = 0; i <= 36; i++) {
-      this.draw(i, color);
-      // let poly = this.editor.polygon(Editor.hex(5 + 16 * i, 10));
-      // poly.on("click", (e) => {
-      //   if (poly.attr("fill") === "#000000") {
-      //     poly.attr({
-      //       "fill-opacity": 1,
-      //       "stroke-width": 0,
-      //       fill: color,
-      //     });
-      //   } else {
-      //     poly.attr({
-      //       "fill-opacity": 1,
-      //       "stroke-width": 0,
-      //     });
-      //     poly.fill((color = poly.attr("fill") === "white" ? "red" : "white"));
-      //   }
-      // });
-      // poly.on(["contextmenu", "dblclick"], (e) => {
-      //   e.preventDefault();
-      //   color = "white";
-      //   poly.attr({
-      //     "fill-opacity": 0.0001,
-      //     stroke: "white",
-      //     "stroke-width": 1,
-      //     fill: "#000000",
-      //   });
-      // });
-      // poly.attr({
-      //   "fill-opacity": 0.0001,
-      //   stroke: "white",
-      //   "stroke-width": 1,
-      // });
-      // //poly.fill("white");
-      // //poly.stroke({ color: "white", width: 1 });
+      this.draw(i, color, shift);
+    }
+    color = "white";
+    shift = 1;
+    for (let i = 0; i <= 35; i++) {
+      this.draw(i, color, shift);
     }
   };
 
-  draw = (i, color) => {
-    let poly = this.editor.polygon(Editor.hex(5 + 16 * i, 10));
+  draw = (i, color, shift) => {
+    let poly = this.editor.polygon(
+      Editor.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
+    );
     poly.on("click", (e) => {
       if (poly.attr("fill") === "#000000") {
         poly.attr({
