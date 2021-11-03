@@ -36,10 +36,12 @@ export default class Editor {
       });
       poly.on("contextmenu", (e) => {
         e.preventDefault();
+        color = "white";
         poly.attr({
           "fill-opacity": 0.0001,
           stroke: "white",
           "stroke-width": 1,
+          fill: "#000000",
         });
       });
       poly.attr({
