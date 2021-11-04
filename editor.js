@@ -1,7 +1,9 @@
+import Main from "./main.js";
 import Polygon from "./polygon.js";
 
 export default class Editor {
-  constructor() {
+  constructor(self) {
+    this.self = self;
     this.editor = SVG().addTo("#editor").size(600, 600);
     this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
     this.hexagons();
@@ -52,6 +54,12 @@ export default class Editor {
         upperStart - lowerStart,
         upperEnd - lowerEnd
       );
+      let upper = upperFull.substring(upperStart, upperEnd + 1);
+      let lower = lowerFull.substring(lowerStart, lowerEnd + 1);
+      console.log(upper);
+      console.log(lower);
+      let myown = { upper: upper, lower: lower };
+      Main.backstraps.patterns.myown = myown;
       const regex = /^[-]*[sv]{4,}[-]*$/g;
       if (
         (upperStart - lowerStart === 0 || upperStart - lowerStart === 1) &&
@@ -59,12 +67,8 @@ export default class Editor {
         upperFull.match(regex) &&
         lowerFull.match(regex)
       )
-        console.log("Ok!");
-      else console.log("Valami nincs rendben!");
-      let upper = upperFull.substring(upperStart, upperEnd + 1);
-      let lower = lowerFull.substring(lowerStart, lowerEnd + 1);
-      console.log(upper);
-      console.log(lower);
+        this.self.initDraw("myown");
+      else alert("Valami nincs rendben!");
     });
   };
 
