@@ -50,6 +50,8 @@ export default class Editor {
       if (((us - ls) === 0 || (us - ls) === 1) && ((ue - le) === 0 || (ue - le) === 1))
         console.log("Ok!")
       else console.log("Valami nincs rendben!")
+      const regex = /^[-]+[sv]{4,}[-]+$/g
+      console.log(upper.match(regex))
     });
   };
 
