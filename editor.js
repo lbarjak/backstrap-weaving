@@ -47,7 +47,7 @@ export default class Editor {
       while (upper[ue] === "-") ue--;
       while (lower[le] === "-") le--;
       console.log(ue, le, us - ls, ue - le);
-      const regex = /^[-]+[sv]{4,}[-]+$/g
+      const regex = /^[-]*[sv]{4,}[-]*$/g
       if (((us - ls) === 0 || (us - ls) === 1)
         && ((ue - le) === 0 || (ue - le) === 1)
         && upper.match(regex)
