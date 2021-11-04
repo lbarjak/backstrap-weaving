@@ -38,18 +38,18 @@ export default class Editor {
       lower = fillAttributeString.substring(37, 73);
       console.log(upper);
       console.log(lower);
-      let us = 0;
-      let ls = 0;
-      while (upper[us] === "-") us++;
-      while (lower[ls] === "-") ls++;
-      let ue = upper.length - 1;
-      let le = lower.length - 1;
-      while (upper[ue] === "-") ue--;
-      while (lower[le] === "-") le--;
-      console.log(ue, le, us - ls, ue - le);
+      let upperStart = 0;
+      let lowerStart = 0;
+      while (upper[upperStart] === "-") upperStart++;
+      while (lower[lowerStart] === "-") lowerStart++;
+      let upperEnd = upper.length - 1;
+      let lowerEnd = lower.length - 1;
+      while (upper[upperEnd] === "-") upperEnd--;
+      while (lower[lowerEnd] === "-") lowerEnd--;
+      console.log(upperEnd, lowerEnd, upperStart - lowerStart, upperEnd - lowerEnd);
       const regex = /^[-]*[sv]{4,}[-]*$/g
-      if (((us - ls) === 0 || (us - ls) === 1)
-        && ((ue - le) === 0 || (ue - le) === 1)
+      if (((upperStart - lowerStart) === 0 || (upperStart - lowerStart) === 1)
+        && ((upperEnd - lowerEnd) === 0 || (upperEnd - lowerEnd) === 1)
         && upper.match(regex)
         && lower.match(regex))
         console.log("Ok!")
