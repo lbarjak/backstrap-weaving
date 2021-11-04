@@ -23,7 +23,7 @@ export default class Main {
   constructor() {
     this.drawing = SVG().addTo("#backstrap").size(600, 600);
     this.rect = this.drawing.rect(600, 600).attr({ fill: "gray" });
-    new Editor();
+    new Editor(this);
     new Form(this);
     this.initDraw("hullámos");
   }
