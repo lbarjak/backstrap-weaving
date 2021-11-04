@@ -4,11 +4,11 @@ export default class Editor {
   constructor() {
     this.editor = SVG().addTo("#editor").size(600, 600);
     this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
-    this.hexagon();
+    this.hexagons();
     this.color = "white";
   }
 
-  hexagon = () => {
+  hexagons = () => {
     let shift = 0;
     for (let i = 0; i <= 36; i++) {
       this.draw(i, shift);
@@ -32,11 +32,22 @@ export default class Editor {
       let fillAttributeString = fillAttributes
         .join("")
         .replaceAll("red", "s")
-        .replaceAll("white", "v");
+        .replaceAll("white", "v")
+        .replaceAll("#000000", "-");
       upper = fillAttributeString.substring(0, 37);
       lower = fillAttributeString.substring(37, 73);
       console.log(upper);
       console.log(lower);
+      let us = 0;
+      let ls = 0;
+      while (upper[us] === "-") us++;
+      while (lower[ls] === "-") ls++;
+      console.log(us, ls, us - ls);
+      let ue = upper.length - 1;
+      let le = lower.length - 1;
+      while (upper[ue] === "-") ue--;
+      while (lower[le] === "-") le--;
+      console.log(ue, le, ue - le);
     });
   };
 
