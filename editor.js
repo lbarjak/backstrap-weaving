@@ -42,12 +42,14 @@ export default class Editor {
       let ls = 0;
       while (upper[us] === "-") us++;
       while (lower[ls] === "-") ls++;
-      console.log(us, ls, us - ls);
       let ue = upper.length - 1;
       let le = lower.length - 1;
       while (upper[ue] === "-") ue--;
       while (lower[le] === "-") le--;
-      console.log(ue, le, ue - le);
+      console.log(ue, le, us - ls, ue - le);
+      if (((us - ls) === 0 || (us - ls) === 1) && ((ue - le) === 0 || (ue - le) === 1))
+        console.log("Ok!")
+      else console.log("Valami nincs rendben!")
     });
   };
 
