@@ -32,7 +32,6 @@ export default class Main {
     clearTimeout(this.timer);
     this.row = 0;
     this.pos = 0;
-    //this.polygons = [];
     Polygon.serNum = 0;
     let hexagons = document.querySelectorAll("#backstrap > svg > polygon");
     hexagons.forEach((polygon) => polygon.remove());
@@ -46,9 +45,7 @@ export default class Main {
       x = 299 - pattern.length * 8;
       x = x + this.pos * 16 + direction * corr * -1;
       color = Main.backstraps.colors[pattern[this.pos]];
-      //polygon =
       new Polygon(this.drawing, x, y, color);
-      //this.polygons.push(polygon);
       this.pos = this.pos + direction;
       if (this.pos === pattern.length || this.pos === -1)
         this.pos =
@@ -69,7 +66,6 @@ export default class Main {
     this.pattNow = Main.backstraps.patterns[nameOfPattern];
     let corr = this.pattNow.upper.length === this.pattNow.lower.length ? 4 : 0;
     let direction, x, y, pattern, color;
-    //let polygon;
     draw();
   }
 }

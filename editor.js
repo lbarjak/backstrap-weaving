@@ -69,6 +69,12 @@ export default class Editor {
       )
         this.self.initDraw("myown");
       else alert("Valami nincs rendben!");
+      let select = document.querySelector("select");
+      let option = document.createElement("option");
+      option.value = "myown";
+      option.selected = true;
+      option.append("my own");
+      select.append(option);
     });
   };
 
