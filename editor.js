@@ -19,8 +19,8 @@ export default class Editor {
     }
     let ok = document.getElementById("ok");
     let x = document.getElementById("x");
-    let upper;
-    let lower;
+    let upperFull;
+    let lowerFull;
     ok.addEventListener("click", () => {
       let polygons = document.querySelectorAll("#editor > svg > polygon");
       let fillAttributes = [];
@@ -34,26 +34,37 @@ export default class Editor {
         .replaceAll("red", "s")
         .replaceAll("white", "v")
         .replaceAll("#000000", "-");
-      upper = fillAttributeString.substring(0, 37);
-      lower = fillAttributeString.substring(37, 73);
-      console.log(upper);
-      console.log(lower);
+      upperFull = fillAttributeString.substring(0, 37);
+      lowerFull = fillAttributeString.substring(37, 73);
+      console.log(upperFull);
+      console.log(lowerFull);
       let upperStart = 0;
       let lowerStart = 0;
-      while (upper[upperStart] === "-") upperStart++;
-      while (lower[lowerStart] === "-") lowerStart++;
-      let upperEnd = upper.length - 1;
-      let lowerEnd = lower.length - 1;
-      while (upper[upperEnd] === "-") upperEnd--;
-      while (lower[lowerEnd] === "-") lowerEnd--;
-      console.log(upperEnd, lowerEnd, upperStart - lowerStart, upperEnd - lowerEnd);
-      const regex = /^[-]*[sv]{4,}[-]*$/g
-      if (((upperStart - lowerStart) === 0 || (upperStart - lowerStart) === 1)
-        && ((upperEnd - lowerEnd) === 0 || (upperEnd - lowerEnd) === 1)
-        && upper.match(regex)
-        && lower.match(regex))
-        console.log("Ok!")
-      else console.log("Valami nincs rendben!")
+      while (upperFull[upperStart] === "-") upperStart++;
+      while (lowerFull[lowerStart] === "-") lowerStart++;
+      let upperEnd = upperFull.length - 1;
+      let lowerEnd = lowerFull.length - 1;
+      while (upperFull[upperEnd] === "-") upperEnd--;
+      while (lowerFull[lowerEnd] === "-") lowerEnd--;
+      console.log(
+        upperEnd,
+        lowerEnd,
+        upperStart - lowerStart,
+        upperEnd - lowerEnd
+      );
+      const regex = /^[-]*[sv]{4,}[-]*$/g;
+      if (
+        (upperStart - lowerStart === 0 || upperStart - lowerStart === 1) &&
+        (upperEnd - lowerEnd === 0 || upperEnd - lowerEnd === 1) &&
+        upperFull.match(regex) &&
+        lowerFull.match(regex)
+      )
+        console.log("Ok!");
+      else console.log("Valami nincs rendben!");
+      let upper = upperFull.substring(upperStart, upperEnd + 1);
+      let lower = lowerFull.substring(lowerStart, lowerEnd + 1);
+      console.log(upper);
+      console.log(lower);
     });
   };
 
