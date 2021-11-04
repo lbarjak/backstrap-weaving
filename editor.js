@@ -23,6 +23,7 @@ export default class Editor {
     let x = document.getElementById("x");
     let upperFull;
     let lowerFull;
+    let opt = false;
     ok.addEventListener("click", () => {
       let polygons = document.querySelectorAll("#editor > svg > polygon");
       let fillAttributes = [];
@@ -74,7 +75,8 @@ export default class Editor {
       option.value = "myown";
       option.selected = true;
       option.append("my own");
-      select.append(option);
+      if (!opt) select.append(option);
+      opt = true;
     });
   };
 
