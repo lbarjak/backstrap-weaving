@@ -1,21 +1,14 @@
-export default class Editor {
-  static hex = (x, y) => [
-    [x + 0, y + 7],
-    [x + 7, y + 0],
-    [x + 14, y + 7],
-    [x + 14, y + 39],
-    [x + 7, y + 46],
-    [x + 0, y + 39],
-  ];
+import Polygon from "./polygon.js";
 
+export default class Editor {
   constructor() {
     this.editor = SVG().addTo("#editor").size(600, 600);
     this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
-    this.hexagon();
+    this.hexagons();
     this.color = "white";
   }
 
-  hexagon = () => {
+  hexagons = () => {
     let shift = 0;
     for (let i = 0; i <= 36; i++) {
       this.draw(i, shift);
@@ -25,23 +18,59 @@ export default class Editor {
       this.draw(i, shift);
     }
     let ok = document.getElementById("ok");
-    let x = document.getElementById("X");
-    let hexagons = [];
-    let upper = [];
-    let lower = [];
+    let x = document.getElementById("x");
+    let upperFull;
+    let lowerFull;
     ok.addEventListener("click", () => {
       let polygons = document.querySelectorAll("#editor > svg > polygon");
+      let fillAttributes = [];
       polygons.forEach((hex) => {
-        hexagons.push(hex.getAttribute("fill"));
+        fillAttributes.push(
+          hex.getAttribute("fill") === null ? "-" : hex.getAttribute("fill")
+        );
       });
-      upper = hexagons.slice(0, 37);
-      lower = hexagons.slice(-36);
+      let fillAttributeString = fillAttributes
+        .join("")
+        .replaceAll("red", "s")
+        .replaceAll("white", "v")
+        .replaceAll("#000000", "-");
+      upperFull = fillAttributeString.substring(0, 37);
+      lowerFull = fillAttributeString.substring(37, 73);
+      console.log(upperFull);
+      console.log(lowerFull);
+      let upperStart = 0;
+      let lowerStart = 0;
+      while (upperFull[upperStart] === "-") upperStart++;
+      while (lowerFull[lowerStart] === "-") lowerStart++;
+      let upperEnd = upperFull.length - 1;
+      let lowerEnd = lowerFull.length - 1;
+      while (upperFull[upperEnd] === "-") upperEnd--;
+      while (lowerFull[lowerEnd] === "-") lowerEnd--;
+      console.log(
+        upperEnd,
+        lowerEnd,
+        upperStart - lowerStart,
+        upperEnd - lowerEnd
+      );
+      const regex = /^[-]*[sv]{4,}[-]*$/g;
+      if (
+        (upperStart - lowerStart === 0 || upperStart - lowerStart === 1) &&
+        (upperEnd - lowerEnd === 0 || upperEnd - lowerEnd === 1) &&
+        upperFull.match(regex) &&
+        lowerFull.match(regex)
+      )
+        console.log("Ok!");
+      else console.log("Valami nincs rendben!");
+      let upper = upperFull.substring(upperStart, upperEnd + 1);
+      let lower = lowerFull.substring(lowerStart, lowerEnd + 1);
+      console.log(upper);
+      console.log(lower);
     });
   };
 
   draw = (i, shift) => {
     let poly = this.editor.polygon(
-      Editor.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
+      Polygon.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
     );
     poly.attr({
       "fill-opacity": 0.0001,

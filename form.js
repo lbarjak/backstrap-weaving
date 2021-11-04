@@ -21,7 +21,6 @@ export default class Form {
       select.append(option);
     }
     select.addEventListener("click", (e) => {
-      console.log(e);
       this.self.initDraw(select.value);
     });
   }
