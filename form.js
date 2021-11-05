@@ -1,4 +1,5 @@
 import Main from "./main.js";
+import Datas from "./datas.js";
 export default class Form {
   constructor(self) {
     this.self = self;
@@ -6,7 +7,7 @@ export default class Form {
   }
 
   form() {
-    let patterns = Main.backstraps.patterns;
+    let patterns = Datas.backstraps.patterns;
     let menu = document.getElementById("menu");
     menu.append("Válassz egy mintát (Choose a pattern):");
     let form = document.createElement("form");

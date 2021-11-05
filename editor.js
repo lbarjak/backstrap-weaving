@@ -1,5 +1,6 @@
 import Main from "./main.js";
 import Polygon from "./polygon.js";
+import Datas from "./datas.js";
 
 export default class Editor {
   constructor(self) {
@@ -60,7 +61,7 @@ export default class Editor {
       console.log(upper);
       console.log(lower);
       let myown = { upper: upper, lower: lower };
-      Main.backstraps.patterns.myown = myown;
+      Datas.backstraps.patterns.myown = myown;
       const regex = /^[-]*[sv]{4,}[-]*$/g;
       if (
         (upperStart - lowerStart === 0 || upperStart - lowerStart === 1) &&
