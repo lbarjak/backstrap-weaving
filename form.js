@@ -17,7 +17,7 @@ export default class Form {
     for (const [key] of Object.entries(patterns)) {
       option = document.createElement("option");
       option.value = key;
-      option.append(key.replace("_", " "));
+      option.append(key.replaceAll("_", " "));
       select.append(option);
     }
     select.addEventListener("click", (e) => {
