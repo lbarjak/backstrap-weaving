@@ -77,18 +77,18 @@ export default class Datas {
         upper: "ssssvvvvvvssssssssvvvvvvssss",
         lower: "ssssvvvsssssssssssssvvvssss",
       },
-      // _farkasfogas: {
-      //     upper: "ffffffffvssfsvvvvvffff",
-      //     lower: "ffffvvvvvsfssvffffffff",
-      // },
+      farkasfogas: {
+        upper: "ffffffffvssfsvvvvvffff",
+        lower: "ffffvvvvvsfssvffffffff",
+      },
       Miskei_Kovács_Kati_nénié: {
         upper: "vvssvvv",
         lower: "vsvsvvv",
       },
-      // _Gyimesi_szalag_olvasata: {
-      //     upper: "sfvfvffvsvvsvvvfvfs",
-      //     lower: "sfvfvvvsvvsvffvfvfs",
-      // },
+      gyimesi_szalag_olvasata: {
+        upper: "sfvfvffvsvvsvvvfvfs",
+        lower: "sfvfvvvsvvsvffvfvfs",
+      },
       litkei_törölköző_csíkja: {
         upper: "vvvvsssvvvsssvvsssvvvsssvvvv",
         lower: "vsssvvvvvvvvsssvvvvvvvvsssv",
@@ -98,7 +98,7 @@ export default class Datas {
         lower: "sssssvvvvvvvsssvvvvvvvsssss",
       },
     },
-    colors: { v: "white", s: "red" },
+    colors: { v: "white", s: "red", f: "black" },
     healds: { 0: "upper", 1: "lower" },
   };
 }

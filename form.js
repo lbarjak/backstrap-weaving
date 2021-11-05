@@ -1,4 +1,3 @@
-import Main from "./main.js";
 import Datas from "./datas.js";
 export default class Form {
   constructor(self) {
