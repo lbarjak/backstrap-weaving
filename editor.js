@@ -27,78 +27,84 @@ export default class Editor {
     let lowerFull;
     let opt = false;
     ok.addEventListener("click", () => {
-      let polygons = document.querySelectorAll("#editor > svg > polygon");
-      let fillAttributes = [];
-      polygons.forEach((hex) => {
-        fillAttributes.push(
-          hex.getAttribute("fill") === null ? "-" : hex.getAttribute("fill")
+      if (this.self.row === 0) {
+        let polygons = document.querySelectorAll("#editor > svg > polygon");
+        let fillAttributes = [];
+        polygons.forEach((hex) => {
+          fillAttributes.push(
+            hex.getAttribute("fill") === null ? "-" : hex.getAttribute("fill")
+          );
+        });
+        let fillAttributeString = fillAttributes
+          .join("")
+          .replaceAll("red", "s")
+          .replaceAll("white", "v")
+          .replaceAll("#000000", "-");
+        upperFull = fillAttributeString.substring(0, 37);
+        lowerFull = fillAttributeString.substring(37, 73);
+        console.log(upperFull);
+        console.log(lowerFull);
+        let upperStart = 0;
+        let lowerStart = 0;
+        while (upperFull[upperStart] === "-") upperStart++;
+        while (lowerFull[lowerStart] === "-") lowerStart++;
+        let upperEnd = upperFull.length - 1;
+        let lowerEnd = lowerFull.length - 1;
+        while (upperFull[upperEnd] === "-") upperEnd--;
+        while (lowerFull[lowerEnd] === "-") lowerEnd--;
+        console.log(
+          upperEnd,
+          lowerEnd,
+          upperStart - lowerStart,
+          upperEnd - lowerEnd
         );
-      });
-      let fillAttributeString = fillAttributes
-        .join("")
-        .replaceAll("red", "s")
-        .replaceAll("white", "v")
-        .replaceAll("#000000", "-");
-      upperFull = fillAttributeString.substring(0, 37);
-      lowerFull = fillAttributeString.substring(37, 73);
-      console.log(upperFull);
-      console.log(lowerFull);
-      let upperStart = 0;
-      let lowerStart = 0;
-      while (upperFull[upperStart] === "-") upperStart++;
-      while (lowerFull[lowerStart] === "-") lowerStart++;
-      let upperEnd = upperFull.length - 1;
-      let lowerEnd = lowerFull.length - 1;
-      while (upperFull[upperEnd] === "-") upperEnd--;
-      while (lowerFull[lowerEnd] === "-") lowerEnd--;
-      console.log(
-        upperEnd,
-        lowerEnd,
-        upperStart - lowerStart,
-        upperEnd - lowerEnd
-      );
-      let upper = upperFull.substring(upperStart, upperEnd + 1);
-      let lower = lowerFull.substring(lowerStart, lowerEnd + 1);
-      console.log(upper);
-      console.log(lower);
-      let myown = { upper: upper, lower: lower };
-      Datas.backstraps.patterns.myown = myown;
-      const regex = /^[-]*[sv]{4,}[-]*$/g;
-      let middle = 301 + 8 - (37 - upperStart - upperEnd) * 8;
-      console.log(middle);
-      if (
-        (upperStart - lowerStart === 0 || upperStart - lowerStart === 1) &&
-        (upperEnd - lowerEnd === 0 || upperEnd - lowerEnd === 1) &&
-        upperFull.match(regex) &&
-        lowerFull.match(regex)
-      )
-        this.self.initDraw(
-          "myown",
-          middle,
-          this.editor,
-          this.selectorOfSheet,
-          92,
-          12
-        );
-      else alert("Valami nincs rendben!");
-      let select = document.querySelector("select");
-      let option = document.createElement("option");
-      option.value = "myown";
-      option.selected = true;
-      option.append("my own");
-      if (!opt) select.append(option);
-      opt = true;
+        let upper = upperFull.substring(upperStart, upperEnd + 1);
+        let lower = lowerFull.substring(lowerStart, lowerEnd + 1);
+        console.log(upper);
+        console.log(lower);
+        let myown = { upper: upper, lower: lower };
+        Datas.backstraps.patterns.myown = myown;
+        const regex = /^[-]*[sv]{4,}[-]*$/g;
+        let middle = 301 + 8 - (37 - upperStart - upperEnd) * 8;
+        console.log(upper === lower, upperStart - lowerStart);
+        if (upper === lower) middle += 4;
+        if (
+          (upperStart - lowerStart === 0 || upperStart - lowerStart === 1) &&
+          (upperEnd - lowerEnd === 0 || upperEnd - lowerEnd === 1) &&
+          upperFull.match(regex) &&
+          lowerFull.match(regex)
+        )
+          this.self.initDraw(
+            "myown",
+            middle,
+            this.editor,
+            this.selectorOfSheet,
+            92,
+            12
+          );
+        else alert("Valami nincs rendben!");
+        let select = document.querySelector("select");
+        let option = document.createElement("option");
+        option.value = "myown";
+        option.selected = true;
+        option.append("my own");
+        if (!opt) select.append(option);
+        opt = true;
+      }
     });
 
     x.addEventListener("click", () => {
-      this.self.reset(this.selectorOfSheet, -1);
-      let shift = 0;
-      for (let i = 0; i <= 36; i++) {
-        this.drawEmptyHexagons(i, shift);
-      }
-      shift = 1;
-      for (let i = 0; i <= 35; i++) {
-        this.drawEmptyHexagons(i, shift);
+      console.log(this.self.row);
+      if (this.self.row === 0) {
+        this.self.reset(this.selectorOfSheet, -1);
+        let shift = 0;
+        for (let i = 0; i <= 36; i++) {
+          this.drawEmptyHexagons(i, shift);
+        }
+        shift = 1;
+        for (let i = 0; i <= 35; i++) {
+          this.drawEmptyHexagons(i, shift);
+        }
       }
     });
   };
