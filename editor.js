@@ -68,6 +68,8 @@ export default class Editor {
         let middle = 301 + 8 - (37 - upperStart - upperEnd) * 8;
         console.log(upper.length === lower.length, upperStart - lowerStart);
         if (upper.length === lower.length) middle += 4;
+        let lefty = 0;
+        if (upperStart - lowerStart === 1) lefty = -1;
         if (
           (upperStart - lowerStart === 0 || upperStart - lowerStart === 1) &&
           (upperEnd - lowerEnd === 0 || upperEnd - lowerEnd === 1) &&
@@ -80,7 +82,8 @@ export default class Editor {
             this.editor,
             this.selectorOfSheet,
             92,
-            12
+            12,
+            lefty
           );
         else alert("Valami nincs rendben!");
         let select = document.querySelector("select");
