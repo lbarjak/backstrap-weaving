@@ -30,7 +30,7 @@ export default class Main {
       selectorOfSheet + " > svg > polygon"
     );
     hexagons.forEach((polygon, index) => {
-      if (selectorOfSheet == "#editor" && index >= from) polygon.remove();
+      if (selectorOfSheet == "#editor" && index > from) polygon.remove();
       if (selectorOfSheet == "#backstrap") polygon.remove();
     });
   };
