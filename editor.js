@@ -5,7 +5,8 @@ import Datas from "./datas.js";
 export default class Editor {
   constructor(self) {
     this.self = self;
-    this.editor = SVG().addTo("#editor").size(600, 600);
+    this.selectorOfSheet = "#editor";
+    this.editor = SVG().addTo(this.selectorOfSheet).size(600, 600);
     this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
     this.hexagons();
     this.color = "white";
@@ -14,11 +15,11 @@ export default class Editor {
   hexagons = () => {
     let shift = 0;
     for (let i = 0; i <= 36; i++) {
-      this.draw(i, shift);
+      this.drawEmptyHexagons(i, shift);
     }
     shift = 1;
     for (let i = 0; i <= 35; i++) {
-      this.draw(i, shift);
+      this.drawEmptyHexagons(i, shift);
     }
     let ok = document.getElementById("ok");
     let x = document.getElementById("x");
@@ -69,7 +70,7 @@ export default class Editor {
         upperFull.match(regex) &&
         lowerFull.match(regex)
       )
-        this.self.initDraw("myown");
+        this.self.initDraw("myown", 299, this.editor, this.selectorOfSheet);
       else alert("Valami nincs rendben!");
       let select = document.querySelector("select");
       let option = document.createElement("option");
@@ -81,7 +82,7 @@ export default class Editor {
     });
   };
 
-  draw = (i, shift) => {
+  drawEmptyHexagons = (i, shift) => {
     let poly = this.editor.polygon(
       Polygon.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
     );
