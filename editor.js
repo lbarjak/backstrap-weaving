@@ -1,4 +1,3 @@
-import Main from "./main.js";
 import Polygon from "./polygon.js";
 import Datas from "./datas.js";
 
@@ -42,8 +41,6 @@ export default class Editor {
           .replaceAll("#000000", "-");
         upperFull = fillAttributeString.substring(0, 37);
         lowerFull = fillAttributeString.substring(37, 73);
-        console.log(upperFull);
-        console.log(lowerFull);
         let upperStart = 0;
         let lowerStart = 0;
         while (upperFull[upperStart] === "-") upperStart++;
@@ -52,21 +49,12 @@ export default class Editor {
         let lowerEnd = lowerFull.length - 1;
         while (upperFull[upperEnd] === "-") upperEnd--;
         while (lowerFull[lowerEnd] === "-") lowerEnd--;
-        console.log(
-          upperEnd,
-          lowerEnd,
-          upperStart - lowerStart,
-          upperEnd - lowerEnd
-        );
         let upper = upperFull.substring(upperStart, upperEnd + 1);
         let lower = lowerFull.substring(lowerStart, lowerEnd + 1);
-        console.log(upper);
-        console.log(lower);
         let myown = { upper: upper, lower: lower };
         Datas.backstraps.patterns.myown = myown;
         const regex = /^[-]*[sv]{4,}[-]*$/g;
         let middle = 301 + 8 - (37 - upperStart - upperEnd) * 8;
-        console.log(upper.length === lower.length, upperStart - lowerStart);
         if (upper.length === lower.length) middle += 4;
         let lefty = 0;
         if (upperStart - lowerStart === 1) lefty = -1;
@@ -86,18 +74,10 @@ export default class Editor {
             lefty
           );
         else alert("Valami nincs rendben!");
-        let select = document.querySelector("select");
-        let option = document.createElement("option");
-        option.value = "myown";
-        option.selected = true;
-        option.append("my own");
-        if (!opt) select.append(option);
-        opt = true;
       }
     });
 
     x.addEventListener("click", () => {
-      console.log(this.self.row);
       if (this.self.row === 0) {
         this.self.reset(this.selectorOfSheet, -1);
         let shift = 0;

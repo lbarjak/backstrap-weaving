@@ -48,7 +48,6 @@ export default class Main {
       direction = this.row % 2 ? -1 : 1;
       y = yShift + this.row * 41;
       pattern = this.pattNow[Datas.backstraps.healds[this.row % 2]];
-      console.log(this.row, corr, this.row % 2);
       x = middle - pattern.length * 8;
       x =
         x + (this.row % 2) * lefty * 16 + this.pos * 16 + direction * corr * -1;
