@@ -66,8 +66,8 @@ export default class Editor {
         Datas.backstraps.patterns.myown = myown;
         const regex = /^[-]*[sv]{4,}[-]*$/g;
         let middle = 301 + 8 - (37 - upperStart - upperEnd) * 8;
-        console.log(upper === lower, upperStart - lowerStart);
-        if (upper === lower) middle += 4;
+        console.log(upper.length === lower.length, upperStart - lowerStart);
+        if (upper.length === lower.length) middle += 4;
         if (
           (upperStart - lowerStart === 0 || upperStart - lowerStart === 1) &&
           (upperEnd - lowerEnd === 0 || upperEnd - lowerEnd === 1) &&
