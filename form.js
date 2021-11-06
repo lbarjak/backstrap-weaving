@@ -21,7 +21,14 @@ export default class Form {
       select.append(option);
     }
     select.addEventListener("click", (e) => {
-      this.self.initDraw(select.value);
+      this.self.initDraw(
+        select.value,
+        301,
+        this.self.drawing,
+        this.self.selectorOfSheet,
+        10,
+        14
+      );
     });
   }
 }
