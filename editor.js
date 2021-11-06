@@ -13,14 +13,7 @@ export default class Editor {
   }
 
   hexagons = () => {
-    let shift = 0;
-    for (let i = 0; i <= 36; i++) {
-      this.drawEmptyHexagons(i, shift);
-    }
-    shift = 1;
-    for (let i = 0; i <= 35; i++) {
-      this.drawEmptyHexagons(i, shift);
-    }
+    this.drawEmptyHexagons();
     let ok = document.getElementById("ok");
     let x = document.getElementById("x");
     let upperFull;
@@ -89,39 +82,55 @@ export default class Editor {
       if (!opt) select.append(option);
       opt = true;
     });
+
+    x.addEventListener("click", () => {
+      this.self.reset(this.selectorOfSheet, 0);
+      this.drawEmptyHexagons();
+    });
   };
 
-  drawEmptyHexagons = (i, shift) => {
-    let poly = this.editor.polygon(
-      Polygon.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
-    );
-    poly.attr({
-      "fill-opacity": 0.0001,
-      stroke: "white",
-      "stroke-width": 1,
-    });
-
-    poly.on("click", (e) => {
-      if (poly.attr("fill") === "#000000") {
-        poly.attr({
-          "fill-opacity": 1,
-          "stroke-width": 0,
-          fill: this.color,
-        });
-      } else {
-        poly.fill(
-          (this.color = poly.attr("fill") === "white" ? "red" : "white")
-        );
-      }
-    });
-    poly.on(["contextmenu", "dblclick"], (e) => {
-      e.preventDefault();
+  drawEmptyHexagons = () => {
+    let row = (i, shift) => {
+      let poly = this.editor.polygon(
+        Polygon.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
+      );
       poly.attr({
         "fill-opacity": 0.0001,
         stroke: "white",
         "stroke-width": 1,
-        fill: "#000000",
       });
-    });
+
+      poly.on("click", (e) => {
+        if (poly.attr("fill") === "#000000") {
+          poly.attr({
+            "fill-opacity": 1,
+            "stroke-width": 0,
+            fill: this.color,
+          });
+        } else {
+          poly.fill(
+            (this.color = poly.attr("fill") === "white" ? "red" : "white")
+          );
+        }
+      });
+      poly.on(["contextmenu", "dblclick"], (e) => {
+        e.preventDefault();
+        poly.attr({
+          "fill-opacity": 0.0001,
+          stroke: "white",
+          "stroke-width": 1,
+          fill: "#000000",
+        });
+      });
+    };
+
+    let shift = 0;
+    for (let i = 0; i <= 36; i++) {
+      row(i, shift);
+    }
+    shift = 1;
+    for (let i = 0; i <= 35; i++) {
+      row(i, shift);
+    }
   };
 }
