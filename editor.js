@@ -64,13 +64,22 @@ export default class Editor {
       let myown = { upper: upper, lower: lower };
       Datas.backstraps.patterns.myown = myown;
       const regex = /^[-]*[sv]{4,}[-]*$/g;
+      let middle = 301 + 8 - (37 - upperStart - upperEnd) * 8;
+      console.log(middle);
       if (
         (upperStart - lowerStart === 0 || upperStart - lowerStart === 1) &&
         (upperEnd - lowerEnd === 0 || upperEnd - lowerEnd === 1) &&
         upperFull.match(regex) &&
         lowerFull.match(regex)
       )
-        this.self.initDraw("myown", 299, this.editor, this.selectorOfSheet);
+        this.self.initDraw(
+          "myown",
+          middle,
+          this.editor,
+          this.selectorOfSheet,
+          92,
+          12
+        );
       else alert("Valami nincs rendben!");
       let select = document.querySelector("select");
       let option = document.createElement("option");

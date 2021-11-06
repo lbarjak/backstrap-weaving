@@ -23,9 +23,11 @@ export default class Form {
     select.addEventListener("click", (e) => {
       this.self.initDraw(
         select.value,
-        299,
+        301,
         this.self.drawing,
-        this.self.selectorOfSheet
+        this.self.selectorOfSheet,
+        10,
+        14
       );
     });
   }

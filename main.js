@@ -11,7 +11,14 @@ export default class Main {
     this.rect = this.drawing.rect(600, 600).attr({ fill: "gray" });
     new Editor(this);
     new Form(this);
-    this.initDraw("keskeny_csíkos", 299, this.drawing, this.selectorOfSheet);
+    this.initDraw(
+      "keskeny_csíkos",
+      301,
+      this.drawing,
+      this.selectorOfSheet,
+      10,
+      14
+    );
   }
 
   reset = (selectorOfSheet) => {
@@ -22,13 +29,16 @@ export default class Main {
     let hexagons = document.querySelectorAll(
       selectorOfSheet + " > svg > polygon"
     );
-    hexagons.forEach((polygon) => polygon.remove());
+    hexagons.forEach((polygon, index) => {
+      if (selectorOfSheet == "#editor" && index > 72) polygon.remove();
+      if (selectorOfSheet == "#backstrap") polygon.remove();
+    });
   };
 
-  initDraw(nameOfPattern, middle, sheet, selectorOfSheet) {
+  initDraw(nameOfPattern, middle, sheet, selectorOfSheet, yShift, maxRow) {
     let draw = () => {
       direction = this.row % 2 ? -1 : 1;
-      y = 10 + this.row * 41;
+      y = yShift + this.row * 41;
       pattern = this.pattNow[Datas.backstraps.healds[this.row % 2]];
       x = middle - pattern.length * 8;
       x = x + this.pos * 16 + direction * corr * -1;
@@ -42,7 +52,7 @@ export default class Main {
 
       this.timer = setTimeout(() => draw(), 20);
 
-      if (this.row === 14) {
+      if (this.row === maxRow) {
         clearTimeout(this.timer);
         this.row = 0;
         this.pos = 0;
