@@ -12,6 +12,7 @@ export default class Form {
     let form = document.createElement("form");
     menu.append(form);
     let select = document.createElement("select");
+    select.style.borderRadius = "5px";
     form.append(select);
     let option;
     for (const [key] of Object.entries(patterns)) {
