@@ -35,13 +35,22 @@ export default class Main {
     });
   };
 
-  initDraw(nameOfPattern, middle, sheet, selectorOfSheet, yShift, maxRow) {
+  initDraw(
+    nameOfPattern,
+    middle,
+    sheet,
+    selectorOfSheet,
+    yShift,
+    maxRow,
+    lefty = 0
+  ) {
     let draw = () => {
       direction = this.row % 2 ? -1 : 1;
       y = yShift + this.row * 41;
       pattern = this.pattNow[Datas.backstraps.healds[this.row % 2]];
       x = middle - pattern.length * 8;
-      x = x + this.pos * 16 + direction * corr * -1;
+      x =
+        x + (this.row % 2) * lefty * 16 + this.pos * 16 + direction * corr * -1;
       color = Datas.backstraps.colors[pattern[this.pos]];
       new Polygon(sheet, x, y, color);
       this.pos = this.pos + direction;
