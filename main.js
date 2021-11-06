@@ -21,7 +21,7 @@ export default class Main {
     );
   }
 
-  reset = (selectorOfSheet) => {
+  reset = (selectorOfSheet, from = 72) => {
     clearTimeout(this.timer);
     this.row = 0;
     this.pos = 0;
@@ -30,7 +30,7 @@ export default class Main {
       selectorOfSheet + " > svg > polygon"
     );
     hexagons.forEach((polygon, index) => {
-      if (selectorOfSheet == "#editor" && index > 72) polygon.remove();
+      if (selectorOfSheet == "#editor" && index >= from) polygon.remove();
       if (selectorOfSheet == "#backstrap") polygon.remove();
     });
   };
