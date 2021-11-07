@@ -113,6 +113,10 @@ export default class Editor {
       "stroke-width": 1,
     });
     let lastColor;
+    let colorsOrder = {
+      0: { white: "red", red: "white" },
+      1: { white: "red", red: "black", black: "white" },
+    };
     poly.on("click", (e) => {
       lastColor = poly.attr("fill");
       if (poly.attr("fill") === "#000000") {
@@ -122,15 +126,7 @@ export default class Editor {
           fill: this.color,
         });
       } else {
-        if (!this.colorsPressed) {
-          if (lastColor === "white") this.color = "red";
-          else if (lastColor === "red") this.color = "white";
-          else if (lastColor === "black") this.color = "white";
-        } else {
-          if (lastColor === "white") this.color = "red";
-          else if (lastColor === "red") this.color = "black";
-          else if (lastColor === "black") this.color = "white";
-        }
+        this.color = colorsOrder[this.colorsPressed][lastColor];
         poly.fill(this.color);
       }
     });
