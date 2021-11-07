@@ -17,7 +17,6 @@ export default class Editor {
     let colors = document.getElementById("colors");
     colors.addEventListener("click", () => {
       this.colorsPressed = this.colorsPressed ? 0 : 1;
-      console.log(colors.Pressed);
       colors.value = this.colorsPressed + 2 + " szín";
     });
   }
@@ -113,8 +112,9 @@ export default class Editor {
       stroke: "white",
       "stroke-width": 1,
     });
-
+    let lastColor;
     poly.on("click", (e) => {
+      lastColor = poly.attr("fill");
       if (poly.attr("fill") === "#000000") {
         poly.attr({
           "fill-opacity": 1,
@@ -123,13 +123,13 @@ export default class Editor {
         });
       } else {
         if (!this.colorsPressed) {
-          if (this.color === "white") this.color = "red";
-          else if (this.color === "red") this.color = "white";
-          else if (this.color === "black") this.color = "white";
+          if (lastColor === "white") this.color = "red";
+          else if (lastColor === "red") this.color = "white";
+          else if (lastColor === "black") this.color = "white";
         } else {
-          if (this.color === "white") this.color = "red";
-          else if (this.color === "red") this.color = "black";
-          else if (this.color === "black") this.color = "white";
+          if (lastColor === "white") this.color = "red";
+          else if (lastColor === "red") this.color = "black";
+          else if (lastColor === "black") this.color = "white";
         }
         poly.fill(this.color);
       }
