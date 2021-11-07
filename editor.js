@@ -7,8 +7,19 @@ export default class Editor {
     this.selectorOfSheet = "#editor";
     this.editor = SVG().addTo(this.selectorOfSheet).size(600, 600);
     this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
+    this.colorsPressed = 0;
+    this.init();
     this.hexagons();
     this.color = "white";
+  }
+
+  init() {
+    let colors = document.getElementById("colors");
+    colors.addEventListener("click", () => {
+      this.colorsPressed = this.colorsPressed ? 0 : 1;
+      console.log(colors.Pressed);
+      colors.value = this.colorsPressed + 2 + " szín";
+    });
   }
 
   hexagons = () => {
@@ -24,7 +35,6 @@ export default class Editor {
     let x = document.getElementById("x");
     let upperFull;
     let lowerFull;
-    let opt = false;
     ok.addEventListener("click", () => {
       if (this.self.row === 0) {
         let polygons = document.querySelectorAll("#editor > svg > polygon");
@@ -38,6 +48,7 @@ export default class Editor {
           .join("")
           .replaceAll("red", "s")
           .replaceAll("white", "v")
+          .replaceAll("black", "f")
           .replaceAll("#000000", "-");
         upperFull = fillAttributeString.substring(0, 37);
         lowerFull = fillAttributeString.substring(37, 73);
@@ -53,7 +64,7 @@ export default class Editor {
         let lower = lowerFull.substring(lowerStart, lowerEnd + 1);
         let myown = { upper: upper, lower: lower };
         Datas.backstraps.patterns.myown = myown;
-        const regex = /^[-]*[sv]{4,}[-]*$/g;
+        const regex = /^[-]*[svf]{4,}[-]*$/g;
         let middle = 301 + 8 - (37 - upperStart - upperEnd) * 8;
         if (upper.length === lower.length) middle += 4;
         let lefty = 0;
@@ -111,9 +122,16 @@ export default class Editor {
           fill: this.color,
         });
       } else {
-        poly.fill(
-          (this.color = poly.attr("fill") === "white" ? "red" : "white")
-        );
+        if (!this.colorsPressed) {
+          if (this.color === "white") this.color = "red";
+          else if (this.color === "red") this.color = "white";
+          else if (this.color === "black") this.color = "white";
+        } else {
+          if (this.color === "white") this.color = "red";
+          else if (this.color === "red") this.color = "black";
+          else if (this.color === "black") this.color = "white";
+        }
+        poly.fill(this.color);
       }
     });
     poly.on(["contextmenu", "dblclick"], (e) => {
