@@ -57,7 +57,8 @@ export default class Editor {
         let middle = 301 + 8 - (37 - upperStart - upperEnd) * 8;
         if (upper.length === lower.length) middle += 4;
         let lefty = 0;
-        if (upperStart - lowerStart === 1) lefty = -1;
+        if (upperStart - lowerStart === 1 && upper === lower) lefty = -1;
+        console.log(lefty);
         if (
           (upperStart - lowerStart === 0 || upperStart - lowerStart === 1) &&
           (upperEnd - lowerEnd === 0 || upperEnd - lowerEnd === 1) &&
