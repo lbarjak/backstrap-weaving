@@ -89,6 +89,7 @@ export default class Editor {
     });
 
     x.addEventListener("click", () => {
+      this.color = "white";
       if (this.self.row === 0) {
         this.self.reset(this.selectorOfSheet, -1);
         let shift = 0;
@@ -114,7 +115,7 @@ export default class Editor {
     });
     let lastColor;
     let colorsOrder = {
-      0: { white: "red", red: "white" },
+      0: { white: "red", red: "white", black: "white" },
       1: { white: "red", red: "black", black: "white" },
     };
     poly.on("click", (e) => {
