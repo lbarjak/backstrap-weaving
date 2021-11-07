@@ -1,8 +1,8 @@
 import Polygon from "./polygon.js";
 
 export default class PatternEditor {
-  constructor(editor) {
-    this.editor = editor;
+  constructor() {
+    this.editor = document.getElementsByTagName("svg")[1].instance;
     this.color = "white";
     this.colorsPressed = 0;
     this.colorSwitcher();

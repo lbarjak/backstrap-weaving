@@ -7,7 +7,7 @@ export default class Editor {
     this.selectorOfSheet = "#editor";
     this.editor = SVG().addTo(this.selectorOfSheet).size(600, 600);
     this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
-    this.patternEditor = new PatternEditor(this.editor).patternEditor;
+    this.patternEditor = new PatternEditor().patternEditor;
     this.patternProcessor();
   }
 
@@ -17,6 +17,7 @@ export default class Editor {
     let x = document.getElementById("x");
     let upperFull;
     let lowerFull;
+
     ok.addEventListener("click", () => {
       if (this.self.row === 0) {
         let polygons = document.querySelectorAll("#editor > svg > polygon");
