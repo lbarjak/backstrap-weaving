@@ -8,12 +8,12 @@ export default class Editor {
     this.editor = SVG().addTo(this.selectorOfSheet).size(600, 600);
     this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
     this.colorsPressed = 0;
-    this.init();
-    this.hexagons();
+    this.colorSwitcher();
+    this.patternProcessor();
     this.color = "white";
   }
 
-  init() {
+  colorSwitcher() {
     let colors = document.getElementById("colors");
     colors.addEventListener("click", () => {
       this.colorsPressed = this.colorsPressed ? 0 : 1;
@@ -21,14 +21,11 @@ export default class Editor {
     });
   }
 
-  hexagons = () => {
-    let shift = 0;
-    for (let i = 0; i <= 36; i++) {
-      this.drawEmptyHexagons(i, shift);
-    }
-    shift = 1;
-    for (let i = 0; i <= 35; i++) {
-      this.drawEmptyHexagons(i, shift);
+  patternProcessor = () => {
+    for (let j = 0; j < 2; j++) {
+      for (let i = 0; i <= 36 - j; i++) {
+        this.patternEditor(i, j);
+      }
     }
     let ok = document.getElementById("ok");
     let x = document.getElementById("x");
@@ -94,17 +91,17 @@ export default class Editor {
         this.self.reset(this.selectorOfSheet, -1);
         let shift = 0;
         for (let i = 0; i <= 36; i++) {
-          this.drawEmptyHexagons(i, shift);
+          this.patternEditor(i, shift);
         }
         shift = 1;
         for (let i = 0; i <= 35; i++) {
-          this.drawEmptyHexagons(i, shift);
+          this.patternEditor(i, shift);
         }
       }
     });
   };
 
-  drawEmptyHexagons = (i, shift) => {
+  patternEditor = (i, shift) => {
     let poly = this.editor.polygon(
       Polygon.hex(shift * 8 + (5 + 16 * i), shift * 41 + 10)
     );
