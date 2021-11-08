@@ -37,7 +37,7 @@ export default class Drawing {
           (++this.row % 2) *
           (this.pattNow[Datas.backstraps.healds[this.row % 2]].length - 1);
 
-      this.timer = setTimeout(() => draw(), 20);
+      this.timer = setTimeout(() => draw(), (37 / pattern.length) * 10);
 
       if (this.row === maxRow) {
         clearTimeout(this.timer);
