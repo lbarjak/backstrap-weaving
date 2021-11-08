@@ -6,6 +6,18 @@ export default class Form {
   }
 
   form() {
+    let patternDrawing = (e) => {
+      console.log(e);
+      this.self.initDraw(
+        e.target.value,
+        301,
+        this.self.drawing,
+        this.self.selectorOfSheet,
+        10,
+        14
+      );
+    };
+
     let patterns = Datas.backstraps.patterns;
     let menu = document.getElementById("menu");
     menu.append("Válassz egy mintát (Choose a pattern):");
@@ -21,15 +33,6 @@ export default class Form {
       option.append(key.replaceAll("_", " "));
       select.append(option);
     }
-    select.addEventListener("click", (e) => {
-      this.self.initDraw(
-        select.value,
-        301,
-        this.self.drawing,
-        this.self.selectorOfSheet,
-        10,
-        14
-      );
-    });
+    select.addEventListener("change", patternDrawing);
   }
 }
