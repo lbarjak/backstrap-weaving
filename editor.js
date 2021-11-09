@@ -5,9 +5,7 @@ import Drawing from "./drawing.js";
 export default class Editor {
   constructor() {
     this.selectorOfSheet = "#editor";
-    //this.editor = SVG().addTo(this.selectorOfSheet).size(600, 600);
     this.drawing = new Drawing(this.selectorOfSheet);
-    //this.rect = this.editor.rect(600, 600).attr({ fill: "gray" });
     this.patternEditor = new PatternEditor().patternEditor;
     this.patternProcessor();
   }
