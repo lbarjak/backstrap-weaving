@@ -1,21 +1,16 @@
 import Datas from "./datas.js";
+import Drawing from "./drawing.js";
 export default class Form {
-  constructor(self) {
-    this.self = self;
+  constructor() {
+    this.selectorOfSheet = "#backstrap";
+    this.drawing = new Drawing(this.selectorOfSheet);
+    this.drawing.initDraw("keskeny_csíkos", 301, 10, 14);
     this.form();
   }
 
   form() {
     let patternDrawing = (e) => {
-      console.log(e);
-      this.self.initDraw(
-        e.target.value,
-        301,
-        this.self.drawing,
-        this.self.selectorOfSheet,
-        10,
-        14
-      );
+      this.drawing.initDraw(e.target.value, 301, 10, 14);
     };
 
     let patterns = Datas.backstraps.patterns;
