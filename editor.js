@@ -63,7 +63,7 @@ export default class Editor {
       else alert("Valami nincs rendben!");
     });
 
-    x.addEventListener("click", () => {
+    x.addEventListener("click", (e) => {
       this.color = "white";
       this.drawing.reset(-1);
       this.patternEditor();
